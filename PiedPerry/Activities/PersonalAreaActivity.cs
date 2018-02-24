@@ -2,14 +2,20 @@
 using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Widget;
+using Android.Support.V4.Widget;
+using Android.Support.V7.App;
+using Android.Support.Design.Widget;
+using Android.Support.V4.View;
+
+using SupportToolbar = Android.Support.V7.Widget.Toolbar;
+using SupportActionBar = Android.Support.V7.App.ActionBar;
 
 namespace PiedPerry.Activities
 {
-    [Activity(Label = "Личный кабинет")]
-    public class PersonalAreaActivity : Activity
+    [Activity(Label = "Личный кабинет", Theme = "@style/Theme.PiedPerry")]
+    public class PersonalAreaActivity : AppCompatActivity
     {
-        private Button exitFromAccButton { get; set; }
+        private DrawerLayout drawerLayout { get; set; }
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -22,9 +28,35 @@ namespace PiedPerry.Activities
 
         private void InitComponents()
         {
-            exitFromAccButton = FindViewById<Button>(Resource.Id.exitFromAccButton);
+            SupportToolbar toolbar = FindViewById<SupportToolbar>(Resource.Id.toolBar);
+            SetSupportActionBar(toolbar);
 
-            exitFromAccButton.Click += ExitFromAccButton_Click;
+            SupportActionBar actionBar = SupportActionBar;
+            actionBar.SetHomeAsUpIndicator(Resource.Drawable.ic_menu);
+            actionBar.SetDisplayHomeAsUpEnabled(true);
+
+            drawerLayout = FindViewById<DrawerLayout>(Resource.Id.drawerLayout);
+
+            NavigationView navView = FindViewById<NavigationView>(Resource.Id.navView);
+            if (navView != null)
+                SetUpDrawerContent(navView);
+
+            TabLayout tabs = FindViewById<TabLayout>(Resource.Id.tabs);
+
+            ViewPager viewPager = FindViewById<ViewPager>(Resource.Id.viewPager);
+            SetUpViewePager(viewPager);
+
+            tabs.SetupWithViewPager(viewPager);
+        }
+
+        private void SetUpDrawerContent(NavigationView navView)
+        {
+
+        }
+
+        private void SetUpViewePager(ViewPager viewPager)
+        {
+            
         }
 
         private void ExitFromAccButton_Click(object sender, EventArgs eventArgs)
