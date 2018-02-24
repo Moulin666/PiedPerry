@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:minWidth="25px"
+        android:minHeight="25px">
+        <EditText
+            android:inputType="textPersonName"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/nameInput"
+            android:hint="Имя" />
+        <EditText
+            android:inputType="textPersonName"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/lastNameInput"
+            android:hint="Фамилия" />
+        <EditText
+            android:inputType="textPersonName"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/middleNameInput"
+            android:hint="Отчество" />
+        <TextView
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/textView2"
+            android:text="Пол"
+            android:paddingLeft="10dp" />
+        <RadioGroup
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/radioGroup1">
+            <RadioButton
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:checked="true"
+                android:id="@+id/maleRadioButton"
+                android:text="Мужской" />
+            <RadioButton
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/femaleRadioButton"
+                android:text="Женский" />
+        </RadioGroup>
+        <EditText
+            android:inputType="textMultiLine"
+            android:layout_width="fill_parent"
+            android:layout_height="92.0dp"
+            android:id="@+id/aboutInput"
+            android:hint="Расскажите о себе"
+            android:gravity="left" />
+        <EditText
+            android:inputType="textEmailAddress"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/emailRegisterInput"
+            android:hint="Email" />
+        <EditText
+            android:inputType="textPassword"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/passwordRegisterInput"
+            android:hint="Пароль" />
+        <EditText
+            android:inputType="textPassword"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/confirmPasswordInput"
+            android:hint="Повторите пароль" />
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/registerButton"
+            android:text="Зарегестрироваться"
+            android:textSize="12dp" />
+    </LinearLayout>
+</ScrollView>
