@@ -1,12 +1,17 @@
 ﻿using System;
+using System.IO;
+using System.Json;
+using System.Net;
+using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
 using Android.Graphics;
 using Android.OS;
 using Android.Support.Design.Widget;
 using Android.Support.V7.App;
-using Android.Views;
 using Android.Widget;
+using Newtonsoft.Json;
+using PiedPerry.DataBase.Map;
 
 namespace PiedPerry.Activities
 {
@@ -52,28 +57,83 @@ namespace PiedPerry.Activities
             passwordInput.SetTypeface(typeface, TypefaceStyle.Normal);
         }
 
-        private void LoginButton_Click(object sender, EventArgs eventArgs)
+        private async void LoginButton_Click(object sender, EventArgs eventArgs)
         {
-            // Login request to the server
+            //string url = "http://api.geonames.org/findNearByWeatherJSON?lat=" +
+            //    emailInput.Text + "&lng=" + passwordInput.Text + "&username=demo";
 
-            if (passwordInput.Text != "123456")
+            //JsonValue jsonResponse = await FetchUser(url);
+            //JsonValue requestInfo = jsonResponse["request_Info"];
+
+            //if (requestInfo["code"] != "OK")
+            //{
+            //    TextInputLayout passwordInputLayout =
+            //        FindViewById<TextInputLayout>(Resource.Id.passwordInputLayout);
+
+            //    passwordInputLayout.Error = "Email или пароль введены не верно.";
+
+            //    return;
+            //}
+
+            //JsonValue userInfo = jsonResponse["send_data"];
+
+            //var user = new UserMap();
+            //user.Name = userInfo["first_name"];
+            //user.LastName = userInfo["last_name"];
+            //user.MiddleName = userInfo["middle_name"];
+            //user.Sex = userInfo["UserGender"];
+            //user.About = userInfo["about_me"];
+            //user.Tags = userInfo["tags"];
+            //user.Rating = userInfo["rating"];
+            //user.BirthDate = userInfo["birthday_date"];
+
+            JsonValue jsonFile;
+
+            var assembly = typeof(LoadResourceText).GetTypeInfo().Assembly;
+            Stream stream = assembly.GetManifestResourceStream("WorkingWithFiles.PCLTextResource.txt");
+            using (StreamReader r = new StreamReader())
             {
-                TextInputLayout passwordInputLayout =
-                    FindViewById<TextInputLayout>(Resource.Id.passwordInputLayout);
-
-                passwordInputLayout.Error = "Такого пользователя не существует.";
-
-                return;
+                jsonFile = r.ReadToEnd();
             }
 
-            // Handle login response
+            JsonValue userInfo = jsonFile["send_data"];
+
+            var user = new UserMap();
+            user.Name = userInfo["first_name"];
+            user.LastName = userInfo["last_name"];
+            user.MiddleName = userInfo["middle_name"];
+            user.Sex = userInfo["UserGender"];
+            user.About = userInfo["about_me"];
+            user.Tags = userInfo["tags"];
+            user.Rating = userInfo["rating"];
+            user.BirthDate = userInfo["birthday_date"];
+
+            string userString = JsonConvert.SerializeObject(user);
+
             var setPrefs = Application.Context.GetSharedPreferences("PiedPerry", FileCreationMode.Private);
             var prefEditor = setPrefs.Edit();
             prefEditor.PutBoolean("isLogin", true);
+            prefEditor.PutString("UserInfo", userString);
             prefEditor.Commit();
 
             StartActivity(typeof(MainActivity));
             Finish();
+        }
+
+        private async Task<JsonValue> FetchUser(string url)
+        {
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(new Uri(url));
+            request.ContentType = "application/json";
+            request.Method = "GET";
+
+            using (WebResponse response = await request.GetResponseAsync())
+            {
+                using (Stream stream = response.GetResponseStream())
+                {
+                    JsonValue json = await Task.Run(() => JsonValue.Load(stream));
+                    return json;
+                }
+            }
         }
 
         private void ToRegisterButton_Click(object sender, EventArgs eventArgs)

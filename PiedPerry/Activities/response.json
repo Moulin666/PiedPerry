@@ -1,0 +1,35 @@
+﻿{
+  "request_Info": {
+    "code": "OK",
+    "answer": "200"
+  },
+  "send_data": {
+    "first_name": "Михаил",
+    "last_name": "Степанов",
+    "middle_name": "Иванович",
+    "UserGender": "Мужчина",
+    "about_me": "Программист C#",
+    "tags": "C#",
+    "rating": 25,
+    "birthday_date": "24/24/2012",
+    "place_of_work": null
+  },
+  "Resume": {
+    "id": 1,
+    "name": "Праграммист",
+    "description": "Праграммист C#",
+    "minimal_rating": 20,
+    "tags": null,
+    "wanted_salary": 50000,
+    "psycho_type": "normal",
+    "user_id": 1
+  },
+  "Places_of_work": {
+    "id": 0,
+    "name": null,
+    "position": null,
+    "description": null,
+    "date_begin": null,
+    "date_end": null
+  }
+}

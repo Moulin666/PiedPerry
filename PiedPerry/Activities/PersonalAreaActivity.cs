@@ -1,5 +1,4 @@
-﻿using System;
-using Android.App;
+﻿using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Support.V4.Widget;
@@ -10,6 +9,8 @@ using Android.Views;
 using SupportToolbar = Android.Support.V7.Widget.Toolbar;
 using SupportActionBar = Android.Support.V7.App.ActionBar;
 using Android.Widget;
+using PiedPerry.DataBase.Map;
+using Newtonsoft.Json;
 
 namespace PiedPerry.Activities
 {
@@ -20,11 +21,24 @@ namespace PiedPerry.Activities
 
         private Button exitFromAccButton { get; set; }
 
+        private UserMap userInfo { get; set; }
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
 
             SetContentView(Resource.Layout.PersonalArea);
+
+            var getPrefs = Application.Context.GetSharedPreferences("PiedPerry", FileCreationMode.Private);
+            string userString = getPrefs.GetString("UserInfo", "");
+
+            if (userString == "")
+            {
+                Finish();
+                return;
+            }
+
+            userInfo = JsonConvert.DeserializeObject<UserMap>(userString);
 
             InitComponents();
         }
@@ -47,6 +61,9 @@ namespace PiedPerry.Activities
 
         private void SetUpDrawerContent(NavigationView navView)
         {
+            //IMenuItem nameViewHeader = navView.Menu.GetItem(Resource.Id.nameViewHeader);
+            //nameViewHeader.SetTitle(string.Format("{0} {1} {2}", userInfo.LastName, userInfo.Name, userInfo.MiddleName));
+
             navView.NavigationItemSelected += (object sender, NavigationView.NavigationItemSelectedEventArgs eventArgs) =>
             {
                 eventArgs.MenuItem.SetChecked(true);
@@ -59,13 +76,14 @@ namespace PiedPerry.Activities
                         break;
 
                     case Resource.Id.nav_moreButton1:
-                        View anchor1 = sender as View;
-                        Snackbar.Make(anchor1, "ещо шта нибудь", Snackbar.LengthLong).Show();
+                        MoreButton_Click(sender, eventArgs);
                         break;
 
                     case Resource.Id.nav_moreButton2:
                         View anchor2 = sender as View;
-                        Snackbar.Make(anchor2, "и ещо", Snackbar.LengthLong).Show();
+                        Snackbar.Make(anchor2,
+                                      string.Format("{0} {1} {2}", userInfo.LastName, userInfo.Name, userInfo.MiddleName),
+                                      Snackbar.LengthLong).Show();
                         break;
 
                     case Resource.Id.nav_moreButton3:
@@ -93,13 +111,15 @@ namespace PiedPerry.Activities
             }
         }
 
+        private void MoreButton_Click(object sender, NavigationView.NavigationItemSelectedEventArgs eventArgs)
+        {
+        }
+
         private void ExitFromAccButton_Click(object sender, NavigationView.NavigationItemSelectedEventArgs eventArgs)
         {
-            // clear all
-
             var setPrefs = Application.Context.GetSharedPreferences("PiedPerry", FileCreationMode.Private);
             var prefEditor = setPrefs.Edit();
-            prefEditor.PutBoolean("isLogin", false);
+            prefEditor.Clear();
             prefEditor.Commit();
 
             StartActivity(typeof(MainActivity));

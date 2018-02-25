@@ -4,6 +4,8 @@ using Android.Content;
 using Android.Graphics;
 using Android.OS;
 using Android.Widget;
+using Newtonsoft.Json;
+using PiedPerry.DataBase.Map;
 
 namespace PiedPerry.Activities
 {
@@ -68,10 +70,22 @@ namespace PiedPerry.Activities
         {
             // Register request to the server
 
-            // Handle register response
+            var user = new UserMap();
+            user.Name = "Михаил";
+            user.LastName = "Степной";
+            user.MiddleName = "Иванович";
+            user.Sex = "Мужской";
+            user.About = "Король мира владеющий HTML!";
+            user.Tags = "HTML";
+            user.Rating = 25;
+            user.BirthDate = DateTime.Now;
+
+            string userString = JsonConvert.SerializeObject(user);
+
             var setPrefs = Application.Context.GetSharedPreferences("PiedPerry", FileCreationMode.Private);
             var prefEditor = setPrefs.Edit();
             prefEditor.PutBoolean("isLogin", true);
+            prefEditor.PutString("UserInfo", userString);
             prefEditor.Commit();
 
             Intent intent = new Intent(this, typeof(MainActivity));
