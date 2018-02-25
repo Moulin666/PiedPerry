@@ -4,12 +4,13 @@
     android:id="@+id/drawerLayout"
     android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="fill_parent"
+    android:fitsSystemWindows="true">
     <include
         layout="@layout/include_list_view" />
     <android.support.design.widget.NavigationView
         android:id="@+id/navView"
-        android:layout_width="325dp"
+        android:layout_width="250dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"

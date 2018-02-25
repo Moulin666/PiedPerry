@@ -5,19 +5,22 @@
     <group android:checkableBehavior="single">
 
         <item
-            android_id="@+id/nav_personalArea"
+            android:id="@+id/nav_personalArea"
             android:icon="@drawable/ic_dashboard"
             android:title="Личный кабинет"/>
 
         <item
+            android:id="@+id/nav_moreButton1"
             android:icon="@drawable/ic_event"
             android:title="ещо шта нибудь"/>
 
         <item
+            android:id="@+id/nav_moreButton2"
             android:icon="@drawable/ic_dashboard"
             android:title="и ещо"/>
 
         <item
+            android:id="@+id/nav_moreButton3"
             android:icon="@drawable/ic_event"
             android:title="и ещооо"/>
         
@@ -28,7 +31,7 @@
         <menu>
 
             <item
-                android:id="@+id/exitFromAccButton"
+                android:id="@+id/nav_exitButton"
                 android:icon="@drawable/ic_dashboard"
                 android:title="Выход"/>
             

@@ -11,8 +11,6 @@ namespace PiedPerry.Activities
         {
             base.OnCreate(savedInstanceState);
 
-            //SetContentView(Resource.Layout.Main);
-
             var getPrefs = Application.Context.GetSharedPreferences("PiedPerry", FileCreationMode.Private);
             var isLogin = getPrefs.GetBoolean("isLogin", false);
 

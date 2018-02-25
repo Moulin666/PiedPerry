@@ -3,12 +3,15 @@ using Android.App;
 using Android.Content;
 using Android.Graphics;
 using Android.OS;
+using Android.Support.Design.Widget;
+using Android.Support.V7.App;
+using Android.Views;
 using Android.Widget;
 
 namespace PiedPerry.Activities
 {
-    [Activity(Label = "Авторизация")]
-    public class LoginActivity : Activity
+    [Activity(Label = "Авторизация", Theme = "@style/Theme.PiedPerry")]
+    public class LoginActivity : AppCompatActivity
     {
         private Button loginButton { get; set; }
         private Button toRegisterButton { get; set; }
@@ -53,7 +56,15 @@ namespace PiedPerry.Activities
         {
             // Login request to the server
 
-            //Toast.MakeText(this, "txt", ToastLength.Short).Show();
+            if (passwordInput.Text != "123456")
+            {
+                TextInputLayout passwordInputLayout =
+                    FindViewById<TextInputLayout>(Resource.Id.passwordInputLayout);
+
+                passwordInputLayout.Error = "Такого пользователя не существует.";
+
+                return;
+            }
 
             // Handle login response
             var setPrefs = Application.Context.GetSharedPreferences("PiedPerry", FileCreationMode.Private);
