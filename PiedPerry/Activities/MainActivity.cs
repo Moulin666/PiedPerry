@@ -12,6 +12,7 @@ namespace PiedPerry.Activities
             base.OnCreate(savedInstanceState);
 
             var getPrefs = Application.Context.GetSharedPreferences("PiedPerry", FileCreationMode.Private);
+
             var isLogin = getPrefs.GetBoolean("isLogin", false);
 
             if (!isLogin)

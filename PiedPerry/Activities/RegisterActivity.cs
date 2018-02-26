@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Json;
 using Android.App;
 using Android.Content;
 using Android.Graphics;
 using Android.OS;
 using Android.Widget;
 using Newtonsoft.Json;
+using PiedPerry.DataBase;
 using PiedPerry.DataBase.Map;
 
 namespace PiedPerry.Activities
@@ -66,26 +68,47 @@ namespace PiedPerry.Activities
             confirmPasswordInput.SetTypeface(typeface, TypefaceStyle.Normal);
         }
 
-        private void RegisterButton_Click(object sender, EventArgs eventArgs)
+        private async void RegisterButton_Click(object sender, EventArgs eventArgs)
         {
-            // Register request to the server
+            // Check validation
 
-            var user = new UserMap();
-            user.Name = "Михаил";
-            user.LastName = "Степной";
-            user.MiddleName = "Иванович";
-            user.Sex = "Мужской";
-            user.About = "Король мира владеющий HTML!";
-            user.Tags = "HTML";
-            user.Rating = 25;
-            user.BirthDate = DateTime.Now;
+            var userSend = new UserMap();
+            userSend.Name = "Михаил";
+            userSend.LastName = "Степной";
+            userSend.MiddleName = "Иванович";
+            userSend.Sex = "Мужской";
+            userSend.About = "Король мира владеющий HTML!";
+            userSend.Tags = "HTML";
+            userSend.Rating = 25;
+            userSend.BirthDate = "";
 
-            string userString = JsonConvert.SerializeObject(user);
+            string url = ""; // to do
+
+            FetchHelper fetchHelper = new FetchHelper();
+            JsonValue jsonResponse = await fetchHelper.FetchObject(url);
+            JsonValue requestInfo = jsonResponse["request_Info"];
+
+            if (requestInfo["code"] != "OK")
+            {
+                // Notify user
+
+                return;
+            }
+
+            string userString = jsonResponse["send_data"];
+
+            UserMap user = JsonConvert.DeserializeObject<UserMap>(userString);
+
+            string userInfo = JsonConvert.SerializeObject(user); // or just take userString
+            string accountEmail = emailRegisterInput.Text;
+            string accountPassword = passwordRegisterInput.Text;
 
             var setPrefs = Application.Context.GetSharedPreferences("PiedPerry", FileCreationMode.Private);
             var prefEditor = setPrefs.Edit();
             prefEditor.PutBoolean("isLogin", true);
-            prefEditor.PutString("UserInfo", userString);
+            prefEditor.PutString("UserInfo", userInfo);
+            prefEditor.PutString("AccountEmail", accountEmail);
+            prefEditor.PutString("AccountPassword", accountPassword);
             prefEditor.Commit();
 
             Intent intent = new Intent(this, typeof(MainActivity));

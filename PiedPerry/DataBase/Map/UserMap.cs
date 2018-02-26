@@ -2,6 +2,7 @@
 
 namespace PiedPerry.DataBase.Map
 {
+    [Serializable]
     public class UserMap
     {
         public string Name { get; set; }
@@ -14,10 +15,6 @@ namespace PiedPerry.DataBase.Map
 
         public int Rating { get; set; }
 
-        // place of work
-        // resume
-        // photo 
-
-        public DateTime BirthDate { get; set; }
+        public string BirthDate { get; set; }
     }
 }

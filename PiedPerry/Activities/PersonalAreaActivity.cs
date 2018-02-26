@@ -61,9 +61,6 @@ namespace PiedPerry.Activities
 
         private void SetUpDrawerContent(NavigationView navView)
         {
-            //IMenuItem nameViewHeader = navView.Menu.GetItem(Resource.Id.nameViewHeader);
-            //nameViewHeader.SetTitle(string.Format("{0} {1} {2}", userInfo.LastName, userInfo.Name, userInfo.MiddleName));
-
             navView.NavigationItemSelected += (object sender, NavigationView.NavigationItemSelectedEventArgs eventArgs) =>
             {
                 eventArgs.MenuItem.SetChecked(true);
