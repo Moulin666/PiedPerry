@@ -10,12 +10,12 @@
         android:layout_height="match_parent"
         android:src="@drawable/photo1"
         android:scaleType="centerCrop" />
-    <TextView
+<!--<TextView
         android:id="@+id/nameViewHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Джеки Чан"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="#F8FBEF"
-        android:layout_gravity="bottom|center" />
+        android:layout_gravity="bottom|center" />-->
 </FrameLayout>

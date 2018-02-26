@@ -26,6 +26,12 @@
             android:layout_height="fill_parent"
             android:id="@+id/middleNameInput"
             android:hint="Отчество" />
+        <EditText
+            android:inputType="date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/birthDateInput"
+            android:hint="Дата рождения" />
         <TextView
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:layout_width="fill_parent"
@@ -36,7 +42,7 @@
         <RadioGroup
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:id="@+id/radioGroup1">
+            android:id="@+id/sexGroup">
             <RadioButton
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"

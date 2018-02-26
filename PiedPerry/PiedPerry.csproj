@@ -97,6 +97,10 @@
     <AndroidResource Include="Resources\drawable\ic_menu.png" />
     <AndroidResource Include="Resources\menu\drawer_view.axml" />
     <AndroidResource Include="Resources\layout\nav_header.axml" />
+    <AndroidResource Include="Resources\drawable\ic_exit.png" />
+    <AndroidResource Include="Resources\drawable\ic_job.png" />
+    <AndroidResource Include="Resources\drawable\ic_resume.png" />
+    <AndroidResource Include="Resources\drawable\ic_testing.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\drawable\" />

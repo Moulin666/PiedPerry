@@ -72,20 +72,16 @@ namespace PiedPerry.Activities
                         PersonalAreaButton_Click(sender, eventArgs);
                         break;
 
-                    case Resource.Id.nav_moreButton1:
-                        MoreButton_Click(sender, eventArgs);
+                    case Resource.Id.nav_resumeButton:
+                        ResumeButton_Click(sender, eventArgs);
                         break;
 
-                    case Resource.Id.nav_moreButton2:
-                        View anchor2 = sender as View;
-                        Snackbar.Make(anchor2,
-                                      string.Format("{0} {1} {2}", userInfo.LastName, userInfo.Name, userInfo.MiddleName),
-                                      Snackbar.LengthLong).Show();
+                    case Resource.Id.nav_findJobButton:
+                        FindJobButton_Click(sender, eventArgs);
                         break;
 
-                    case Resource.Id.nav_moreButton3:
-                        View anchor3 = sender as View;
-                        Snackbar.Make(anchor3, "и ещооо", Snackbar.LengthLong).Show();
+                    case Resource.Id.nav_testingButton:
+                        TestingButton_Click(sender, eventArgs);
                         break;
 
                     case Resource.Id.nav_exitButton:
@@ -108,8 +104,22 @@ namespace PiedPerry.Activities
             }
         }
 
-        private void MoreButton_Click(object sender, NavigationView.NavigationItemSelectedEventArgs eventArgs)
+        private void ResumeButton_Click(object sender, NavigationView.NavigationItemSelectedEventArgs eventArgs)
         {
+            View anchor = sender as View;
+            Snackbar.Make(anchor, "Резюме", Snackbar.LengthLong).Show();
+        }
+
+        private void FindJobButton_Click(object sender, NavigationView.NavigationItemSelectedEventArgs eventArgs)
+        {
+            View anchor = sender as View;
+            Snackbar.Make(anchor, "Поиск работы", Snackbar.LengthLong).Show();
+        }
+
+        private void TestingButton_Click(object sender, NavigationView.NavigationItemSelectedEventArgs eventArgs)
+        {
+            View anchor = sender as View;
+            Snackbar.Make(anchor, "Тестирование", Snackbar.LengthLong).Show();
         }
 
         private void ExitFromAccButton_Click(object sender, NavigationView.NavigationItemSelectedEventArgs eventArgs)
@@ -125,6 +135,11 @@ namespace PiedPerry.Activities
 
         private void PersonalAreaButton_Click(object sender, NavigationView.NavigationItemSelectedEventArgs eventArgs)
         {
+            View anchor = sender as View;
+            Snackbar.Make(anchor,
+                          string.Format("{0} {1} {2}", userInfo.LastName, userInfo.Name, userInfo.MiddleName),
+                          Snackbar.LengthLong).Show();
+            
             StartActivity(typeof(MainActivity));
             Finish();
         }

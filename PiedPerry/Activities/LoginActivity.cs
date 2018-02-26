@@ -57,28 +57,37 @@ namespace PiedPerry.Activities
 
         private async void LoginButton_Click(object sender, EventArgs eventArgs)
         {
-            string url = string.Format("{0} {1}",
-                emailInput.Text, passwordInput.Text);
+            //string url = string.Format("{0} {1}",
+            //    emailInput.Text, passwordInput.Text);
 
-            FetchHelper fetchHelper = new FetchHelper();
-            JsonValue jsonResponse = await fetchHelper.FetchObject(url);
-            JsonValue requestInfo = jsonResponse["request_Info"];
+            //FetchHelper fetchHelper = new FetchHelper();
+            //JsonValue jsonResponse = await fetchHelper.FetchObject(url);
+            //JsonValue requestInfo = jsonResponse["request_Info"];
 
-            if (requestInfo["code"] != "OK")
-            {
-                TextInputLayout passwordInputLayout =
-                    FindViewById<TextInputLayout>(Resource.Id.passwordInputLayout);
+            //if (requestInfo["code"] != "OK")
+            //{
+            //    TextInputLayout passwordInputLayout =
+            //        FindViewById<TextInputLayout>(Resource.Id.passwordInputLayout);
 
-                passwordInputLayout.Error = "Email или пароль введены не верно.";
+            //    passwordInputLayout.Error = "Email или пароль введены не верно.";
 
-                return;
-            }
+            //    return;
+            //}
 
-            string userString = jsonResponse["send_data"];
+            //string userString = jsonResponse["send_data"];
 
-            UserMap user = JsonConvert.DeserializeObject<UserMap>(userString);
-
-            string userInfo = JsonConvert.SerializeObject(user); // or just take userString
+            //UserMap user = JsonConvert.DeserializeObject<UserMap>(userString);
+            UserMap user = new UserMap();
+            user.Name = "Михаил";
+            user.LastName = "Степной";
+            user.MiddleName = "Иванович";
+            user.Sex = "Мужской";
+            user.About = "Программист C#, знаю HTML и много много всего интересного другого. Живу в Караганде.";
+            user.Tags = "C#, HTML";
+            user.Rating = 25;
+            user.BirthDate = "25/12/1987";
+            string userInfo = JsonConvert.SerializeObject(user);
+            //string userInfo = JsonConvert.SerializeObject(user); // or just take userString
             string accountEmail = emailInput.Text;
             string accountPassword = passwordInput.Text;
 
