@@ -6,6 +6,7 @@ using Android.Graphics;
 using Android.OS;
 using Android.Support.Design.Widget;
 using Android.Support.V7.App;
+using Android.Views;
 using Android.Widget;
 using Newtonsoft.Json;
 using PiedPerry.DataBase;
@@ -57,44 +58,37 @@ namespace PiedPerry.Activities
 
         private async void LoginButton_Click(object sender, EventArgs eventArgs)
         {
-            //string url = string.Format("{0} {1}",
-            //    emailInput.Text, passwordInput.Text);
+            string url = string.Format(
+                "http://whisperq.ru/Api?key=ee85d34b-8443-4c8d-9369-0cfb04c2d79d&target=authorization&email={0}&password={1}",
+                emailInput.Text, passwordInput.Text);
 
-            //FetchHelper fetchHelper = new FetchHelper();
-            //JsonValue jsonResponse = await fetchHelper.FetchObject(url);
-            //JsonValue requestInfo = jsonResponse["request_Info"];
+            string jsonResponse = "";
 
-            //if (requestInfo["code"] != "OK")
-            //{
-            //    TextInputLayout passwordInputLayout =
-            //        FindViewById<TextInputLayout>(Resource.Id.passwordInputLayout);
+            try
+            {
+                FetchHelper fetchHelper = new FetchHelper();
+                jsonResponse = await fetchHelper.FetchObject(url);
+            }
+            catch (Exception ex) { ex.ToString(); return; }
 
-            //    passwordInputLayout.Error = "Email или пароль введены не верно.";
+            Response Response = JsonConvert.DeserializeObject<Response>(jsonResponse);
 
-            //    return;
-            //}
+            if (Response.responseCode.code != "OK")
+            {
+                TextInputLayout passwordInputLayout =
+                    FindViewById<TextInputLayout>(Resource.Id.passwordInputLayout);
 
-            //string userString = jsonResponse["send_data"];
+                passwordInputLayout.Error = "Email или пароль введены не верно.";
 
-            //UserMap user = JsonConvert.DeserializeObject<UserMap>(userString);
-            UserMap user = new UserMap();
-            user.Name = "Михаил";
-            user.LastName = "Степной";
-            user.MiddleName = "Иванович";
-            user.Sex = "Мужской";
-            user.About = "Программист C#, знаю HTML и много много всего интересного другого. Живу в Караганде.";
-            user.Tags = "C#, HTML";
-            user.Rating = 25;
-            user.BirthDate = "25/12/1987";
-            string userInfo = JsonConvert.SerializeObject(user);
-            //string userInfo = JsonConvert.SerializeObject(user); // or just take userString
+                return;
+            }
+
             string accountEmail = emailInput.Text;
             string accountPassword = passwordInput.Text;
 
             var setPrefs = Application.Context.GetSharedPreferences("PiedPerry", FileCreationMode.Private);
             var prefEditor = setPrefs.Edit();
             prefEditor.PutBoolean("isLogin", true);
-            prefEditor.PutString("UserInfo", userInfo);
             prefEditor.PutString("AccountEmail", accountEmail);
             prefEditor.PutString("AccountPassword", accountPassword);
             prefEditor.Commit();

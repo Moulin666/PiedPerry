@@ -8,7 +8,7 @@ namespace PiedPerry.DataBase
 {
     public class FetchHelper
     {
-        public async Task<JsonValue> FetchObject(string url)
+        public async Task<string> FetchObject(string url)
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(new Uri(url));
             request.ContentType = "application/json";
@@ -19,7 +19,7 @@ namespace PiedPerry.DataBase
                 using (Stream stream = response.GetResponseStream())
                 {
                     JsonValue json = await Task.Run(() => JsonValue.Load(stream));
-                    return json;
+                    return json.ToString();
                 }
             }
         }

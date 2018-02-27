@@ -87,43 +87,43 @@ namespace PiedPerry.Activities
         {
             // Check validation
 
-            var userSend = new UserMap();
-            userSend.Name = nameInput.Text;
-            userSend.LastName = lastNameInput.Text;
-            userSend.MiddleName = middleInput.Text;
-            userSend.Sex = sex;
-            userSend.About = aboutInput.Text;
-            userSend.Tags = "";
-            userSend.Rating = 0;
-            userSend.BirthDate = birthDateInput.Text;
+            //var userSend = new UserMap();
+            //userSend.Name = nameInput.Text;
+            //userSend.LastName = lastNameInput.Text;
+            //userSend.MiddleName = middleInput.Text;
+            //userSend.Sex = sex;
+            //userSend.About = aboutInput.Text;
+            //userSend.Tags = "";
+            //userSend.Rating = 0;
+            //userSend.BirthDate = birthDateInput.Text;
 
-            //string url = ""; // to do
+            ////string url = ""; // to do
 
-            //FetchHelper fetchHelper = new FetchHelper();
-            //JsonValue jsonResponse = await fetchHelper.FetchObject(url);
-            //JsonValue requestInfo = jsonResponse["request_Info"];
+            ////FetchHelper fetchHelper = new FetchHelper();
+            ////JsonValue jsonResponse = await fetchHelper.FetchObject(url);
+            ////JsonValue requestInfo = jsonResponse["request_Info"];
 
-            //if (requestInfo["code"] != "OK")
-            //{
-            //    // Notify user
+            ////if (requestInfo["code"] != "OK")
+            ////{
+            ////    // Notify user
 
-            //    return;
-            //}
+            ////    return;
+            ////}
 
-            //string userString = jsonResponse["send_data"];
+            ////string userString = jsonResponse["send_data"];
 
-            //UserMap user = JsonConvert.DeserializeObject<UserMap>(userString);
-            string userInfo = JsonConvert.SerializeObject(userSend);
-            //string userInfo = JsonConvert.SerializeObject(user); // or just take userString
-            string accountEmail = emailRegisterInput.Text;
-            string accountPassword = passwordRegisterInput.Text;
+            ////UserMap user = JsonConvert.DeserializeObject<UserMap>(userString);
+            //string userInfo = JsonConvert.SerializeObject(userSend);
+            ////string userInfo = JsonConvert.SerializeObject(user); // or just take userString
+            //string accountEmail = emailRegisterInput.Text;
+            //string accountPassword = passwordRegisterInput.Text;
 
             var setPrefs = Application.Context.GetSharedPreferences("PiedPerry", FileCreationMode.Private);
             var prefEditor = setPrefs.Edit();
             prefEditor.PutBoolean("isLogin", true);
-            prefEditor.PutString("UserInfo", userInfo);
-            prefEditor.PutString("AccountEmail", accountEmail);
-            prefEditor.PutString("AccountPassword", accountPassword);
+            //prefEditor.PutString("UserInfo", userInfo);
+            //prefEditor.PutString("AccountEmail", accountEmail);
+            //prefEditor.PutString("AccountPassword", accountPassword);
             prefEditor.Commit();
 
             Intent intent = new Intent(this, typeof(MainActivity));

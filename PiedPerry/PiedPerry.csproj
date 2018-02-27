@@ -66,8 +66,9 @@
     <Compile Include="Activities\LoginActivity.cs" />
     <Compile Include="Activities\PersonalAreaActivity.cs" />
     <Compile Include="Activities\RegisterActivity.cs" />
-    <Compile Include="DataBase\Map\UserMap.cs" />
     <Compile Include="DataBase\FetchHelper.cs" />
+    <Compile Include="DataBase\Map\ServerApiMap.cs" />
+    <Compile Include="DataBase\ServerResponseCode.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

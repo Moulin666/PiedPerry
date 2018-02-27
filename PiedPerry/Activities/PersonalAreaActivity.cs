@@ -11,6 +11,9 @@ using SupportActionBar = Android.Support.V7.App.ActionBar;
 using Android.Widget;
 using PiedPerry.DataBase.Map;
 using Newtonsoft.Json;
+using PiedPerry.DataBase;
+using System.Threading.Tasks;
+using System;
 
 namespace PiedPerry.Activities
 {
@@ -29,16 +32,13 @@ namespace PiedPerry.Activities
 
             SetContentView(Resource.Layout.PersonalArea);
 
-            var getPrefs = Application.Context.GetSharedPreferences("PiedPerry", FileCreationMode.Private);
-            string userString = getPrefs.GetString("UserInfo", "");
-
-            if (userString == "")
+            Task<UserMap> taskUserInfo = Task.Run(async () =>
             {
-                Finish();
-                return;
-            }
+                UserMap ui = await GetUserInfo();
+                return ui;
+            });
 
-            userInfo = JsonConvert.DeserializeObject<UserMap>(userString);
+            userInfo = taskUserInfo.Result;
 
             InitComponents();
         }
@@ -57,6 +57,54 @@ namespace PiedPerry.Activities
             NavigationView navView = FindViewById<NavigationView>(Resource.Id.navView);
             if (navView != null)
                 SetUpDrawerContent(navView);
+        }
+
+        private async Task<UserMap> GetUserInfo()
+        {
+            var getPrefs = Application.Context.GetSharedPreferences("PiedPerry", FileCreationMode.Private);
+            var email = getPrefs.GetString("AccountEmail", "e");
+            var pass = getPrefs.GetString("AccountPassword", "1");
+
+            string url = string.Format(
+                "http://whisperq.ru/Api?key=ee85d34b-8443-4c8d-9369-0cfb04c2d79d&target=authorization&email={0}&password={1}",
+                email, pass);
+
+            string jsonResponse = "";
+
+            try
+            {
+                FetchHelper fetchHelper = new FetchHelper();
+                jsonResponse = await fetchHelper.FetchObject(url);
+            }
+            catch (Exception ex)
+            {
+                ex.ToString();
+
+                var setPrefs1 = Application.Context.GetSharedPreferences("PiedPerry", FileCreationMode.Private);
+                var prefEditor1 = setPrefs1.Edit();
+                prefEditor1.Clear();
+
+                StartActivity(typeof(MainActivity));
+                Finish();
+
+                return new UserMap();
+            }
+
+            Response Response = JsonConvert.DeserializeObject<Response>(jsonResponse);
+
+            if (Response.responseCode.code != "OK")
+            {
+                var setPrefs1 = Application.Context.GetSharedPreferences("PiedPerry", FileCreationMode.Private);
+                var prefEditor1 = setPrefs1.Edit();
+                prefEditor1.Clear();
+
+                StartActivity(typeof(MainActivity));
+                Finish();
+
+                return new UserMap();
+            }
+
+            return Response.userMap;
         }
 
         private void SetUpDrawerContent(NavigationView navView)
@@ -119,7 +167,9 @@ namespace PiedPerry.Activities
         private void TestingButton_Click(object sender, NavigationView.NavigationItemSelectedEventArgs eventArgs)
         {
             View anchor = sender as View;
-            Snackbar.Make(anchor, "Тестирование", Snackbar.LengthLong).Show();
+            Snackbar.Make(anchor,
+                          string.Format("{0} {1} {2}", userInfo.last_name, userInfo.first_name, userInfo.middle_name),
+                          Snackbar.LengthLong).Show();
         }
 
         private void ExitFromAccButton_Click(object sender, NavigationView.NavigationItemSelectedEventArgs eventArgs)
@@ -137,7 +187,7 @@ namespace PiedPerry.Activities
         {
             View anchor = sender as View;
             Snackbar.Make(anchor,
-                          string.Format("{0} {1} {2}", userInfo.LastName, userInfo.Name, userInfo.MiddleName),
+                          string.Format("{0} {1} {2}", userInfo.last_name, userInfo.first_name, userInfo.middle_name),
                           Snackbar.LengthLong).Show();
             
             StartActivity(typeof(MainActivity));
