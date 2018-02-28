@@ -92,7 +92,7 @@ namespace PiedPerry.Activities
 
             Response Response = JsonConvert.DeserializeObject<Response>(jsonResponse);
 
-            if (Response.responseCode.code != "OK")
+            if (Response.responseCode.code != "200")
             {
                 var setPrefs1 = Application.Context.GetSharedPreferences("PiedPerry", FileCreationMode.Private);
                 var prefEditor1 = setPrefs1.Edit();

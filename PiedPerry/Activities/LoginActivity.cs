@@ -73,7 +73,7 @@ namespace PiedPerry.Activities
 
             Response Response = JsonConvert.DeserializeObject<Response>(jsonResponse);
 
-            if (Response.responseCode.code != "OK")
+            if (Response.responseCode.code != "200")
             {
                 TextInputLayout passwordInputLayout =
                     FindViewById<TextInputLayout>(Resource.Id.passwordInputLayout);
