@@ -8,13 +8,14 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="32dp"
+        android:textColor="@android:color/holo_orange_light"
         android:layout_centerInParent="true"
         android:gravity="center"
-        android:text="Pied Perry"
+        android:text="Clever"
         android:textSize="30sp"
-        android:textColor="#333333"
         android:layout_gravity="top"
-        android:id="@+id/textView2" />
+        android:id="@+id/appNameText" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

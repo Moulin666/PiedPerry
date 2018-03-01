@@ -7,4 +7,9 @@
     </string>
 
     <string name="checkin">Checkin</string>
+    
+    <string name="resume">Резюме</string>
+    <string name="events">Мероприятия</string>
+    <string name="personalArea">Личный кабинет</string>
+    <string name="game">Оценка компетенций</string>
 </resources>

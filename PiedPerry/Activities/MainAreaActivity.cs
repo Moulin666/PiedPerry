@@ -14,11 +14,12 @@ using Newtonsoft.Json;
 using PiedPerry.DataBase;
 using System.Threading.Tasks;
 using System;
+using Android.Graphics;
 
 namespace PiedPerry.Activities
 {
-    [Activity(Label = "Личный кабинет", Theme = "@style/Theme.PiedPerry")]
-    public class PersonalAreaActivity : AppCompatActivity
+    [Activity(Label = "Главная", Theme = "@style/Theme.PiedPerry")]
+    public class MainAreaActivity : AppCompatActivity
     {
         private DrawerLayout drawerLayout { get; set; }
 
@@ -30,7 +31,14 @@ namespace PiedPerry.Activities
         {
             base.OnCreate(savedInstanceState);
 
-            SetContentView(Resource.Layout.PersonalArea);
+            SetContentView(Resource.Layout.MainArea);
+
+            MainFragment fragment = new MainFragment();
+            var fragmentTransaction = FragmentManager.BeginTransaction();
+            fragmentTransaction.Replace(Resource.Id.fragmentContainer, fragment);
+            fragmentTransaction.Commit();
+
+            // TO DO : Get news
 
             Task<UserMap> taskUserInfo = Task.Run(async () =>
             {
@@ -41,6 +49,7 @@ namespace PiedPerry.Activities
             userInfo = taskUserInfo.Result;
 
             InitComponents();
+            Initialize();
         }
 
         private void InitComponents()
@@ -57,16 +66,18 @@ namespace PiedPerry.Activities
             NavigationView navView = FindViewById<NavigationView>(Resource.Id.navView);
             if (navView != null)
                 SetUpDrawerContent(navView);
+        }
 
-            TextView fioText = FindViewById<TextView>(Resource.Id.fioText);
-            fioText.Text = string.Format("{0} {1} {2}", userInfo.last_name, userInfo.first_name, userInfo.middle_name);
+        private void Initialize()
+        {
+            Typeface typeface = Typeface.CreateFromAsset(Assets, "StolzlLight.otf");
         }
 
         private async Task<UserMap> GetUserInfo()
         {
             var getPrefs = Application.Context.GetSharedPreferences("PiedPerry", FileCreationMode.Private);
-            var email = getPrefs.GetString("AccountEmail", "e");
-            var pass = getPrefs.GetString("AccountPassword", "1");
+            var email = getPrefs.GetString("AccountEmail", " ");
+            var pass = getPrefs.GetString("AccountPassword", " ");
 
             string url = string.Format(
                 "http://whisperq.ru/Api?key=ee85d34b-8443-4c8d-9369-0cfb04c2d79d&target=authorization&email={0}&password={1}",
@@ -119,6 +130,10 @@ namespace PiedPerry.Activities
 
                 switch (eventArgs.MenuItem.ItemId)
                 {
+                    case Resource.Id.nav_mainArea:
+                        MainAreaButton_Click(sender, eventArgs);
+                        break;
+                    
                     case Resource.Id.nav_personalArea:
                         PersonalAreaButton_Click(sender, eventArgs);
                         break;
@@ -155,22 +170,46 @@ namespace PiedPerry.Activities
             }
         }
 
+        private void MainAreaButton_Click(object sender, NavigationView.NavigationItemSelectedEventArgs eventArgs)
+        {
+            StartActivity(typeof(MainActivity));
+            Finish();
+        }
+
+        private void PersonalAreaButton_Click(object sender, NavigationView.NavigationItemSelectedEventArgs eventArgs)
+        {
+            SupportActionBar.SetTitle(Resource.String.personalArea);
+            PersonalAreaFragment fragment = new PersonalAreaFragment();
+            var fragmentTransaction = FragmentManager.BeginTransaction();
+            fragmentTransaction.Replace(Resource.Id.fragmentContainer, fragment);
+            fragmentTransaction.Commit();
+        }
+
         private void ResumeButton_Click(object sender, NavigationView.NavigationItemSelectedEventArgs eventArgs)
         {
-            View anchor = sender as View;
-            Snackbar.Make(anchor, "Резюме", Snackbar.LengthLong).Show();
+            SupportActionBar.SetTitle(Resource.String.resume);
+            ResumeFragment fragment = new ResumeFragment();
+            var fragmentTransaction = FragmentManager.BeginTransaction();
+            fragmentTransaction.Replace(Resource.Id.fragmentContainer, fragment);
+            fragmentTransaction.Commit();
         }
 
         private void EventButton_Click(object sender, NavigationView.NavigationItemSelectedEventArgs eventArgs)
         {
-            View anchor = sender as View;
-            Snackbar.Make(anchor, "Мероприятия", Snackbar.LengthLong).Show();
+            SupportActionBar.SetTitle(Resource.String.events);
+            EventFragment fragment = new EventFragment();
+            var fragmentTransaction = FragmentManager.BeginTransaction();
+            fragmentTransaction.Replace(Resource.Id.fragmentContainer, fragment);
+            fragmentTransaction.Commit();
         }
 
         private void GameButton_Click(object sender, NavigationView.NavigationItemSelectedEventArgs eventArgs)
         {
-            View anchor = sender as View;
-            Snackbar.Make(anchor, "Игра", Snackbar.LengthLong).Show();
+            SupportActionBar.SetTitle(Resource.String.game);
+            GameFragment fragment = new GameFragment();
+            var fragmentTransaction = FragmentManager.BeginTransaction();
+            fragmentTransaction.Replace(Resource.Id.fragmentContainer, fragment);
+            fragmentTransaction.Commit();
         }
 
         private void ExitFromAccButton_Click(object sender, NavigationView.NavigationItemSelectedEventArgs eventArgs)
@@ -180,12 +219,6 @@ namespace PiedPerry.Activities
             prefEditor.Clear();
             prefEditor.Commit();
 
-            StartActivity(typeof(MainActivity));
-            Finish();
-        }
-
-        private void PersonalAreaButton_Click(object sender, NavigationView.NavigationItemSelectedEventArgs eventArgs)
-        {
             StartActivity(typeof(MainActivity));
             Finish();
         }

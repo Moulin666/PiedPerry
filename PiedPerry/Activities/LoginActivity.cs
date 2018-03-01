@@ -17,6 +17,8 @@ namespace PiedPerry.Activities
     [Activity(Label = "Авторизация", Theme = "@style/Theme.PiedPerry")]
     public class LoginActivity : AppCompatActivity
     {
+        private TextView appNameText { get; set; }
+
         private Button loginButton { get; set; }
         private Button toRegisterButton { get; set; }
 
@@ -35,6 +37,8 @@ namespace PiedPerry.Activities
 
         private void InitComponents()
         {
+            appNameText = FindViewById<TextView>(Resource.Id.appNameText);
+
             loginButton = FindViewById<Button>(Resource.Id.loginButton);
             toRegisterButton = FindViewById<Button>(Resource.Id.toRegisterButton);
 
@@ -48,6 +52,8 @@ namespace PiedPerry.Activities
         private void Initialize()
         {
             Typeface typeface = Typeface.CreateFromAsset(Assets, "StolzlLight.otf");
+
+            appNameText.SetTypeface(typeface, TypefaceStyle.BoldItalic);
 
             loginButton.SetTypeface(typeface, TypefaceStyle.Normal);
             toRegisterButton.SetTypeface(typeface, TypefaceStyle.Normal);

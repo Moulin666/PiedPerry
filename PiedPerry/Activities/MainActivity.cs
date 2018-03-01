@@ -4,7 +4,7 @@ using Android.Content;
 
 namespace PiedPerry.Activities
 {
-    [Activity(Label = "PiedPerry", MainLauncher = true, Icon = "@mipmap/icon")]
+    [Activity(Label = "Clever", MainLauncher = true, Icon = "@mipmap/icon")]
     public class MainActivity : Activity
     {
         protected override void OnCreate(Bundle savedInstanceState)
@@ -18,7 +18,7 @@ namespace PiedPerry.Activities
             if (!isLogin)
                 StartActivity(typeof(LoginActivity));
             else
-                StartActivity(typeof(PersonalAreaActivity));
+                StartActivity(typeof(MainAreaActivity));
 
             Finish();
         }
