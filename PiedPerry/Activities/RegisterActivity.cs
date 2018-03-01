@@ -4,6 +4,8 @@ using Android.App;
 using Android.Content;
 using Android.Graphics;
 using Android.OS;
+using Android.Support.Design.Widget;
+using Android.Views;
 using Android.Widget;
 using Newtonsoft.Json;
 using PiedPerry.DataBase;
@@ -85,45 +87,54 @@ namespace PiedPerry.Activities
 
         private async void RegisterButton_Click(object sender, EventArgs eventArgs)
         {
-            // Check validation
+            var userSend = new UserMap();
+            userSend.first_name = nameInput.Text;
+            userSend.last_name = lastNameInput.Text;
+            userSend.middle_name = middleInput.Text;
+            userSend.UserGender = sex;
+            userSend.about_me = aboutInput.Text;
+            userSend.tags = "";
+            userSend.rating = 0;
+            userSend.birthday_date = birthDateInput.Text;
 
-            //var userSend = new UserMap();
-            //userSend.Name = nameInput.Text;
-            //userSend.LastName = lastNameInput.Text;
-            //userSend.MiddleName = middleInput.Text;
-            //userSend.Sex = sex;
-            //userSend.About = aboutInput.Text;
-            //userSend.Tags = "";
-            //userSend.Rating = 0;
-            //userSend.BirthDate = birthDateInput.Text;
+            var registerSend = new RegisterMap();
+            registerSend.userMap = userSend;
+            registerSend.password = passwordRegisterInput.Text;
+            registerSend.email = emailRegisterInput.Text;
 
-            ////string url = ""; // to do
+            string registerInfo = JsonConvert.SerializeObject(registerSend);
 
-            ////FetchHelper fetchHelper = new FetchHelper();
-            ////JsonValue jsonResponse = await fetchHelper.FetchObject(url);
-            ////JsonValue requestInfo = jsonResponse["request_Info"];
+            string url = string.Format(
+                "http://whisperq.ru/Api?key=ee85d34b-8443-4c8d-9369-0cfb04c2d79d&target=authorization&registerInfo={0}",
+                registerInfo);
 
-            ////if (requestInfo["code"] != "OK")
-            ////{
-            ////    // Notify user
+            string jsonResponse = "";
 
-            ////    return;
-            ////}
+            try
+            {
+                FetchHelper fetchHelper = new FetchHelper();
+                jsonResponse = await fetchHelper.FetchObject(url);
+            }
+            catch (Exception ex) { ex.ToString(); return; }
 
-            ////string userString = jsonResponse["send_data"];
+            Response Response = JsonConvert.DeserializeObject<Response>(jsonResponse);
 
-            ////UserMap user = JsonConvert.DeserializeObject<UserMap>(userString);
-            //string userInfo = JsonConvert.SerializeObject(userSend);
-            ////string userInfo = JsonConvert.SerializeObject(user); // or just take userString
-            //string accountEmail = emailRegisterInput.Text;
-            //string accountPassword = passwordRegisterInput.Text;
+            if (Response.responseCode.code != "200")
+            {
+                View anchor = sender as View;
+                Snackbar.Make(anchor, "Информация задана не корректно.", Snackbar.LengthLong).Show();
+
+                return;
+            }
+
+            string accountEmail = emailRegisterInput.Text;
+            string accountPassword = passwordRegisterInput.Text;
 
             var setPrefs = Application.Context.GetSharedPreferences("PiedPerry", FileCreationMode.Private);
             var prefEditor = setPrefs.Edit();
             prefEditor.PutBoolean("isLogin", true);
-            //prefEditor.PutString("UserInfo", userInfo);
-            //prefEditor.PutString("AccountEmail", accountEmail);
-            //prefEditor.PutString("AccountPassword", accountPassword);
+            prefEditor.PutString("AccountEmail", accountEmail);
+            prefEditor.PutString("AccountPassword", accountPassword);
             prefEditor.Commit();
 
             Intent intent = new Intent(this, typeof(MainActivity));

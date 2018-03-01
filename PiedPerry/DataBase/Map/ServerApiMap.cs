@@ -26,6 +26,14 @@ namespace PiedPerry.DataBase.Map
     }
 
     [Serializable]
+    public class RegisterMap
+    {
+        public UserMap userMap;
+        public string password;
+        public string email;
+    }
+
+    [Serializable]
     public class Resume
     {
         public int id { get; set; }

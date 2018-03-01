@@ -15,14 +15,14 @@
             android:title="Резюме"/>
 
         <item
-            android:id="@+id/nav_findJobButton"
-            android:icon="@drawable/ic_job"
-            android:title="Поиск работы"/>
+            android:id="@+id/nav_eventButton"
+            android:icon="@drawable/ic_event"
+            android:title="Мероприятия"/>
 
         <item
-            android:id="@+id/nav_testingButton"
+            android:id="@+id/nav_gameButton"
             android:icon="@drawable/ic_testing"
-            android:title="Тестирование"/>
+            android:title="Игра"/>
         
     </group>
 

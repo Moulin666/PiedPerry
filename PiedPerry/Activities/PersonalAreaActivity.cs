@@ -57,6 +57,9 @@ namespace PiedPerry.Activities
             NavigationView navView = FindViewById<NavigationView>(Resource.Id.navView);
             if (navView != null)
                 SetUpDrawerContent(navView);
+
+            TextView fioText = FindViewById<TextView>(Resource.Id.fioText);
+            fioText.Text = string.Format("{0} {1} {2}", userInfo.last_name, userInfo.first_name, userInfo.middle_name);
         }
 
         private async Task<UserMap> GetUserInfo()
@@ -124,12 +127,12 @@ namespace PiedPerry.Activities
                         ResumeButton_Click(sender, eventArgs);
                         break;
 
-                    case Resource.Id.nav_findJobButton:
-                        FindJobButton_Click(sender, eventArgs);
+                    case Resource.Id.nav_eventButton:
+                        EventButton_Click(sender, eventArgs);
                         break;
 
-                    case Resource.Id.nav_testingButton:
-                        TestingButton_Click(sender, eventArgs);
+                    case Resource.Id.nav_gameButton:
+                        GameButton_Click(sender, eventArgs);
                         break;
 
                     case Resource.Id.nav_exitButton:
@@ -158,18 +161,16 @@ namespace PiedPerry.Activities
             Snackbar.Make(anchor, "Резюме", Snackbar.LengthLong).Show();
         }
 
-        private void FindJobButton_Click(object sender, NavigationView.NavigationItemSelectedEventArgs eventArgs)
+        private void EventButton_Click(object sender, NavigationView.NavigationItemSelectedEventArgs eventArgs)
         {
             View anchor = sender as View;
-            Snackbar.Make(anchor, "Поиск работы", Snackbar.LengthLong).Show();
+            Snackbar.Make(anchor, "Мероприятия", Snackbar.LengthLong).Show();
         }
 
-        private void TestingButton_Click(object sender, NavigationView.NavigationItemSelectedEventArgs eventArgs)
+        private void GameButton_Click(object sender, NavigationView.NavigationItemSelectedEventArgs eventArgs)
         {
             View anchor = sender as View;
-            Snackbar.Make(anchor,
-                          string.Format("{0} {1} {2}", userInfo.last_name, userInfo.first_name, userInfo.middle_name),
-                          Snackbar.LengthLong).Show();
+            Snackbar.Make(anchor, "Игра", Snackbar.LengthLong).Show();
         }
 
         private void ExitFromAccButton_Click(object sender, NavigationView.NavigationItemSelectedEventArgs eventArgs)
@@ -185,11 +186,6 @@ namespace PiedPerry.Activities
 
         private void PersonalAreaButton_Click(object sender, NavigationView.NavigationItemSelectedEventArgs eventArgs)
         {
-            View anchor = sender as View;
-            Snackbar.Make(anchor,
-                          string.Format("{0} {1} {2}", userInfo.last_name, userInfo.first_name, userInfo.middle_name),
-                          Snackbar.LengthLong).Show();
-            
             StartActivity(typeof(MainActivity));
             Finish();
         }

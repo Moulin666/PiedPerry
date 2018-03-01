@@ -8,6 +8,11 @@
     android:fitsSystemWindows="true">
     <include
         layout="@layout/include_list_view" />
+    <TextView
+        android:id="@+id/fioText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/background_dark" />
     <android.support.design.widget.NavigationView
         android:id="@+id/navView"
         android:layout_width="250dp"
