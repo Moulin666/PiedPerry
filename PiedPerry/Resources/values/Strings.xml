@@ -12,4 +12,12 @@
     <string name="events">Мероприятия</string>
     <string name="personalArea">Личный кабинет</string>
     <string name="game">Оценка компетенций</string>
+
+    <string name="first_text">
+        1) Напасть на волчицу с камнем.
+    </string>
+
+    <string name="second_text">
+        2) Спокойно поздороваться и объяснить, что Вы не знаете, что это за место и где оказались.
+    </string>
 </resources>

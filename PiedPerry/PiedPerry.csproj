@@ -58,6 +58,9 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\netstandard2.0\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Xamarin.Android.Support.v7.CardView">
+      <HintPath>..\packages\Crosslight.Xamarin.Android.Support.v7.CardView.23.1.1\lib\MonoAndroid10\Xamarin.Android.Support.v7.CardView.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Resources\Resource.designer.cs" />
@@ -73,6 +76,7 @@
     <Compile Include="Activities\ResumeFragment.cs" />
     <Compile Include="Activities\GameFragment.cs" />
     <Compile Include="Activities\EventFragment.cs" />
+    <Compile Include="Activities\GameActivity.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -112,6 +116,10 @@
     <AndroidResource Include="Resources\layout\fragment_event.axml" />
     <AndroidResource Include="Resources\layout\fragment_resume.axml" />
     <AndroidResource Include="Resources\layout\fragment_game.axml" />
+    <AndroidResource Include="Resources\layout\Menu_list_item.axml" />
+    <AndroidResource Include="Resources\layout\Game_list_item.axml" />
+    <AndroidResource Include="Resources\layout\GameArea.axml" />
+    <AndroidResource Include="Resources\drawable\background_horror.png" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

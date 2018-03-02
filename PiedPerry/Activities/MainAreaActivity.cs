@@ -38,8 +38,6 @@ namespace PiedPerry.Activities
             fragmentTransaction.Replace(Resource.Id.fragmentContainer, fragment);
             fragmentTransaction.Commit();
 
-            // TO DO : Get news
-
             Task<UserMap> taskUserInfo = Task.Run(async () =>
             {
                 UserMap ui = await GetUserInfo();
@@ -49,7 +47,6 @@ namespace PiedPerry.Activities
             userInfo = taskUserInfo.Result;
 
             InitComponents();
-            Initialize();
         }
 
         private void InitComponents()
@@ -67,12 +64,6 @@ namespace PiedPerry.Activities
             if (navView != null)
                 SetUpDrawerContent(navView);
         }
-
-        private void Initialize()
-        {
-            Typeface typeface = Typeface.CreateFromAsset(Assets, "StolzlLight.otf");
-        }
-
         private async Task<UserMap> GetUserInfo()
         {
             var getPrefs = Application.Context.GetSharedPreferences("PiedPerry", FileCreationMode.Private);
